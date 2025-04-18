@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Simulate redirection to admin panel
         setTimeout(() => {
-            window.location.href = 'admin.html';
+            window.location.href = 'frontend/admin.html';
         }, 1500);
     }
 

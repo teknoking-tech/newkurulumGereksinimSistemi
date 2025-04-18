@@ -293,20 +293,17 @@ def process_message():
         webhook_response = requests.post(
             CBOT_WEBHOOK_URL,
             json={'message': user_message},
-            timeout=10
+            timeout=30
         )
         
         if webhook_response.status_code == 200:
             response_data = webhook_response.json()
-            bot_message = response_data.get('response', 'Mesajınız alındı, ancak bir cevap oluşturulamadı.')
             
-            # Alternatif olarak eğer AIFlow "response" değil farklı bir alan dönüyorsa onu da kontrol edelim
-            if not bot_message and 'message' in response_data:
-                bot_message = response_data['message']
-            elif not bot_message and 'answer' in response_data:
-                bot_message = response_data['answer']
-            elif not bot_message and 'content' in response_data:
-                bot_message = response_data['content']
+            # Eğer response_data bir listeyse, ilk öğeyi al
+            if isinstance(response_data, list) and len(response_data) > 0:
+                bot_message = response_data[0].get('output', 'Mesajınız alındı, ancak bir cevap oluşturulamadı.')
+            else:
+                bot_message = 'Mesajınız alındı, ancak bir cevap oluşturulamadı.'
         else:
             # Webhook başarısız olursa basit bir cevap döndür
             logger.warning(f"AIFlow webhook failed with status {webhook_response.status_code}")
@@ -314,22 +311,7 @@ def process_message():
     
     except requests.RequestException as e:
         logger.error(f"Error connecting to AIFlow webhook: {e}")
-        
-        # Alternatif olarak n8n webhook'u deneyelim
-        try:
-            webhook_response = requests.post(
-                CBOT_WEBHOOK_URL,
-                json={'message': user_message},
-                timeout=5
-            )
-            
-            if webhook_response.status_code == 200:
-                response_data = webhook_response.json()
-                bot_message = response_data.get('response', 'cbot üzerinden cevap alındı.')
-            else:
-                bot_message = "Chatbot servisine bağlanırken bir hata oluştu. Lütfen daha sonra tekrar deneyin."
-        except:
-            bot_message = "Tüm chatbot servisleri şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin."
+        bot_message = "Chatbot servisine bağlanırken bir hata oluştu. Lütfen daha sonra tekrar deneyin."
     
     return jsonify({
         'response': bot_message
