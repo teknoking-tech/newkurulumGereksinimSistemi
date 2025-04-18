@@ -28,9 +28,6 @@ app.config['JWT_EXPIRATION'] = 3600  # Token süresi (saniye)
 # n8n webhook URL'i (gerçek uygulamada env dosyasından alınabilir)
 CBOT_WEBHOOK_URL = os.environ.get('CBOT_WEBHOOK_URL', 'https://aiflow.test.cbot.ai/webhook-test/cbot-setup-assistant/gereklilikler')
 
-# n8n webhook URL'i (alternatif olarak mevcut tutalım)
-N8N_WEBHOOK_URL = os.environ.get('N8N_WEBHOOK_URL', 'http://n8n:5678/webhook/cbot-chatbot')
-
 # Mock veritabanı (gerçek uygulamada gerçek bir veritabanı kullanılır)
 DATABASE = {
     'users': {
@@ -321,14 +318,14 @@ def process_message():
         # Alternatif olarak n8n webhook'u deneyelim
         try:
             webhook_response = requests.post(
-                N8N_WEBHOOK_URL,
+                CBOT_WEBHOOK_URL,
                 json={'message': user_message},
                 timeout=5
             )
             
             if webhook_response.status_code == 200:
                 response_data = webhook_response.json()
-                bot_message = response_data.get('response', 'n8n üzerinden cevap alındı.')
+                bot_message = response_data.get('response', 'cbot üzerinden cevap alındı.')
             else:
                 bot_message = "Chatbot servisine bağlanırken bir hata oluştu. Lütfen daha sonra tekrar deneyin."
         except:
