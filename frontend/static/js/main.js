@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Simulate redirection to admin panel
         setTimeout(() => {
-            alert('Bu demo sürümünde yönetici paneli bulunmamaktadır.');
+            window.location.href = 'admin.html';
         }, 1500);
     }
 
