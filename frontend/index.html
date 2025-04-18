@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBOT Kurulum Gereksinimi Asistanı</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="static/img/cbot-logo.png" alt="CBOT Logo">
+                <h1>CBOT Kurulum Gereksinimi Asistanı</h1>
+            </div>
+            <div class="user-menu">
+                <button id="loginBtn"><i class="fas fa-user"></i> Giriş Yap</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="intro">
+            <h2>Kurulum Gereksinimi Çıkartan Akıllı Asistan</h2>
+            <p>CBOT container tabanlı modül ve servislerin kurulumu için gereksinim dokümanınızı oluşturun.</p>
+        </section>
+
+        <div class="content-wrapper">
+            <section class="main-form">
+                <div class="form-section">
+                    <h3>Ortam Seçimi</h3>
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="environment" value="test"> Test
+                        </label>
+                        <label>
+                            <input type="radio" name="environment" value="live"> Canlı
+                        </label>
+                        <label>
+                            <input type="radio" name="environment" value="both" checked> Her İkisi
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Ortam Tipi</h3>
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="environment_type" value="on-prem" checked> On-Prem
+                        </label>
+                        <label>
+                            <input type="radio" name="environment_type" value="cloud"> Bulut
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Ana Modül Seçimi</h3>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" name="core_module" value="core" checked> Core
+                        </label>
+                        <label>
+                            <input type="checkbox" name="core_module" value="panel" checked> Panel
+                        </label>
+                        <label>
+                            <input type="checkbox" name="core_module" value="livechat"> Livechat
+                        </label>
+                        <label>
+                            <input type="checkbox" name="core_module" value="fusion"> Fusion
+                        </label>
+                        <label>
+                            <input type="checkbox" name="core_module" value="classifier"> Classifier
+                        </label>
+                        <label>
+                            <input type="checkbox" name="core_module" value="aiflow"> AI Flow
+                        </label>
+                        <label>
+                            <input type="checkbox" name="core_module" value="analytics"> Analytics
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Yardımcı Servis Seçimi</h3>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" name="auxiliary_service" value="ocr"> OCR
+                        </label>
+                        <label>
+                            <input type="checkbox" name="auxiliary_service" value="masking"> Maskeleme
+                        </label>
+                        <label>
+                            <input type="checkbox" name="auxiliary_service" value="file_to_md"> File to Markdown
+                        </label>
+                        <label>
+                            <input type="checkbox" name="auxiliary_service" value="crawler"> Crawler
+                        </label>
+                        <label>
+                            <input type="checkbox" name="auxiliary_service" value="hf_model_hosting"> HF Model Hosting
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Veritabanı Tercihi</h3>
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="database" value="mongodb"> MongoDB
+                        </label>
+                        <label>
+                            <input type="radio" name="database" value="mssql" checked> MSSQL
+                        </label>
+                        <label>
+                            <input type="radio" name="database" value="postgresql"> PostgreSQL
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>LDAP Kullanımı</h3>
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="ldap" value="yes"> Evet
+                        </label>
+                        <label>
+                            <input type="radio" name="ldap" value="no" checked> Hayır
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-section ldap-details" style="display: none;">
+                    <h3>LDAP Detayları</h3>
+                    <div class="input-group">
+                        <label>LDAP URL:
+                            <input type="text" name="ldap_url" placeholder="ldap://example.com:389">
+                        </label>
+                        <label>BIND DN:
+                            <input type="text" name="bind_dn" placeholder="cn=admin,dc=example,dc=com">
+                        </label>
+                        <label>SEARCH BASE:
+                            <input type="text" name="search_base" placeholder="ou=users,dc=example,dc=com">
+                        </label>
+                        <label>SEARCH FILTER:
+                            <input type="text" name="search_filter" placeholder="(objectClass=person)">
+                        </label>
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="generate-btn">Gereksinim Dokümanı Oluştur</button>
+            </section>
+
+            <aside class="chatbot-container">
+                <div class="chatbot-header">
+                    <h3><i class="fas fa-robot"></i> CBOT Asistan</h3>
+                </div>
+                <div class="chatbot-messages" id="chatMessages">
+                    <div class="message bot-message">
+                        Merhaba! CBOT Kurulum Gereksinimi Asistanı'na hoş geldiniz. Size nasıl yardımcı olabilirim?
+                    </div>
+                </div>
+                <div class="chatbot-input">
+                    <input type="text" id="userMessage" placeholder="Bir mesaj yazın...">
+                    <button id="sendMessage"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Giriş Yap</h2>
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="user">Kullanıcı</button>
+                <button class="tab-btn" data-tab="admin">Yönetici</button>
+            </div>
+            <div id="userLogin" class="tab-content active">
+                <form id="userLoginForm">
+                    <div class="form-group">
+                        <label for="userEmail">E-posta</label>
+                        <input type="email" id="userEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userPassword">Şifre</label>
+                        <input type="password" id="userPassword" required>
+                    </div>
+                    <button type="submit" class="login-btn">Giriş Yap</button>
+                </form>
+            </div>
+            <div id="adminLogin" class="tab-content">
+                <form id="adminLoginForm">
+                    <div class="form-group">
+                        <label for="adminEmail">Yönetici E-posta</label>
+                        <input type="email" id="adminEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="adminPassword">Şifre</label>
+                        <input type="password" id="adminPassword" required>
+                    </div>
+                    <button type="submit" class="login-btn">Yönetici Girişi</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Modal -->
+    <div id="resultsModal" class="modal">
+        <div class="modal-content results-content">
+            <span class="close">&times;</span>
+            <h2>Kurulum Gereksinimleri</h2>
+            <div id="requirementsResults"></div>
+            <div class="download-options">
+                <button id="downloadPdf"><i class="fas fa-file-pdf"></i> PDF İndir</button>
+                <button id="downloadWord"><i class="fas fa-file-word"></i> Word İndir</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 CBOT. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+
+    <script src="static/js/main.js"></script>
+</body>
+</html>

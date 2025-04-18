@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBOT Yönetici Paneli</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="static/css/styles.css">
+    <link rel="stylesheet" href="static/css/admin.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="static/img/cbot-logo.png" alt="CBOT Logo">
+                <h1>CBOT Yönetici Paneli</h1>
+            </div>
+            <div class="user-menu">
+                <span class="admin-name" id="adminName">admin@example.com</span>
+                <button id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="admin-tabs">
+            <button class="tab-btn active" data-tab="modules">Modül Yapılandırması</button>
+            <button class="tab-btn" data-tab="services">Servis Yapılandırması</button>
+            <button class="tab-btn" data-tab="database">Veritabanı Yapılandırması</button>
+            <button class="tab-btn" data-tab="requirements">Gereksinim Dokümanları</button>
+        </div>
+
+        <div class="admin-content">
+            <div id="modulesTab" class="tab-content active">
+                <h2>Modül Yapılandırması</h2>
+                <p class="admin-description">Ana modüllerin donanım gereksinimleri ve açıklamalarını düzenleyin.</p>
+                
+                <div class="module-cards">
+                    <div class="module-card">
+                        <div class="module-header">
+                            <h3>Core</h3>
+                            <button class="edit-btn"><i class="fas fa-edit"></i></button>
+                        </div>
+                        <div class="module-body">
+                            <p><strong>Açıklama:</strong> Ana CBOT çekirdek modülü</p>
+                            <div class="module-specs">
+                                <div class="spec-group">
+                                    <h4>Test Ortamı</h4>
+                                    <p><i class="fas fa-microchip"></i> 4 Core CPU</p>
+                                    <p><i class="fas fa-memory"></i> 8 GB RAM</p>
+                                    <p><i class="fas fa-hdd"></i> 20 GB Disk</p>
+                                </div>
+                                <div class="spec-group">
+                                    <h4>Canlı Ortam</h4>
+                                    <p><i class="fas fa-microchip"></i> 8 Core CPU</p>
+                                    <p><i class="fas fa-memory"></i> 16 GB RAM</p>
+                                    <p><i class="fas fa-hdd"></i> 40 GB Disk</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="module-card">
+                        <div class="module-header">
+                            <h3>Panel</h3>
+                            <button class="edit-btn"><i class="fas fa-edit"></i></button>
+                        </div>
+                        <div class="module-body">
+                            <p><strong>Açıklama:</strong> Yönetim paneli arayüzü</p>
+                            <div class="module-specs">
+                                <div class="spec-group">
+                                    <h4>Test Ortamı</h4>
+                                    <p><i class="fas fa-microchip"></i> 2 Core CPU</p>
+                                    <p><i class="fas fa-memory"></i> 4 GB RAM</p>
+                                    <p><i class="fas fa-hdd"></i> 10 GB Disk</p>
+                                </div>
+                                <div class="spec-group">
+                                    <h4>Canlı Ortam</h4>
+                                    <p><i class="fas fa-microchip"></i> 4 Core CPU</p>
+                                    <p><i class="fas fa-memory"></i> 8 GB RAM</p>
+                                    <p><i class="fas fa-hdd"></i> 20 GB Disk</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="module-card">
+                        <div class="module-header">
+                            <h3>Classifier</h3>
+                            <button class="edit-btn"><i class="fas fa-edit"></i></button>
+                        </div>
+                        <div class="module-body">
+                            <p><strong>Açıklama:</strong> Sınıflandırma modülü (MS SQL Server gerektirir)</p>
+                            <div class="module-specs">
+                                <div class="spec-group">
+                                    <h4>Test Ortamı</h4>
+                                    <p><i class="fas fa-microchip"></i> 8 Core CPU</p>
+                                    <p><i class="fas fa-memory"></i> 16 GB RAM</p>
+                                    <p><i class="fas fa-hdd"></i> 30 GB Disk</p>
+                                </div>
+                                <div class="spec-group">
+                                    <h4>Canlı Ortam</h4>
+                                    <p><i class="fas fa-microchip"></i> 16 Core CPU</p>
+                                    <p><i class="fas fa-memory"></i> 32 GB RAM</p>
+                                    <p><i class="fas fa-hdd"></i> 60 GB Disk</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Diğer modüller burada listelenecek -->
+                </div>
+            </div>
+            
+            <div id="servicesTab" class="tab-content">
+                <h2>Servis Yapılandırması</h2>
+                <p class="admin-description">Yardımcı servislerin donanım gereksinimleri ve açıklamalarını düzenleyin.</p>
+                
+                <div class="module-cards">
+                    <div class="module-card">
+                        <div class="module-header">
+                            <h3>OCR</h3>
+                            <button class="edit-btn"><i class="fas fa-edit"></i></button>
+                        </div>
+                        <div class="module-body">
+                            <p><strong>Açıklama:</strong> Optik Karakter Tanıma servisi</p>
+                            <div class="module-specs">
+                                <div class="spec-group">
+                                    <h4>Test Ortamı</h4>
+                                    <p><i class="fas fa-microchip"></i> 4 Core CPU</p>
+                                    <p><i class="fas fa-memory"></i> 8 GB RAM</p>
+                                    <p><i class="fas fa-hdd"></i> 10 GB Disk</p>
+                                </div>
+                                <div class="spec-group">
+                                    <h4>Canlı Ortam</h4>
+                                    <p><i class="fas fa-microchip"></i> 8 Core CPU</p>
+                                    <p><i class="fas fa-memory"></i> 16 GB RAM</p>
+                                    <p><i class="fas fa-hdd"></i> 20 GB Disk</p>
+                                </div>
+                            </div>
+                            <p><strong>GPU Gereksinimi:</strong> Hayır</p>
+                        </div>
+                    </div>
+                    
+                    <div class="module-card">
+                        <div class="module-header">
+                            <h3>HF Model Hosting</h3>
+                            <button class="edit-btn"><i class="fas fa-edit"></i></button>
+                        </div>
+                        <div class="module-body">
+                            <p><strong>Açıklama:</strong> Huggingface model barındırma servisi</p>
+                            <div class="module-specs">
+                                <div class="spec-group">
+                                    <h4>Test Ortamı</h4>
+                                    <p><i class="fas fa-microchip"></i> 8 Core CPU</p>
+                                    <p><i class="fas fa-memory"></i> 16 GB RAM</p>
+                                    <p><i class="fas fa-hdd"></i> 30 GB Disk</p>
+                                </div>
+                                <div class="spec-group">
+                                    <h4>Canlı Ortam</h4>
+                                    <p><i class="fas fa-microchip"></i> 16 Core CPU</p>
+                                    <p><i class="fas fa-memory"></i> 32 GB RAM</p>
+                                    <p><i class="fas fa-hdd"></i> 60 GB Disk</p>
+                                </div>
+                            </div>
+                            <p><strong>GPU Gereksinimi:</strong> Evet (Minimum 16 GB VRAM)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Diğer servisler burada listelenecek -->
+                </div>
+            </div>
+            
+            <div id="databaseTab" class="tab-content">
+                <h2>Veritabanı Yapılandırması</h2>
+                <p class="admin-description">Veritabanı gereksinimlerini düzenleyin.</p>
+                
+                <div class="db-config-cards">
+                    <div class="db-card">
+                        <div class="db-header">
+                            <h3>Microsoft SQL Server</h3>
+                            <button class="edit-btn"><i class="fas fa-edit"></i></button>
+                        </div>
+                        <div class="db-body">
+                            <p><strong>Port:</strong> 1433</p>
+                            <p><strong>Collation:</strong> SQL_Latin1_General_CP1_CI_AS</p>
+                            <p><strong>Destekleyen Modüller:</strong></p>
+                            <ul class="db-modules-list">
+                                <li>Core</li>
+                                <li>Panel</li>
+                                <li>Classifier</li>
+                                <li>Analytics</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="db-card">
+                        <div class="db-header">
+                            <h3>MongoDB</h3>
+                            <button class="edit-btn"><i class="fas fa-edit"></i></button>
+                        </div>
+                        <div class="db-body">
+                            <p><strong>Port:</strong> 27017</p>
+                            <p><strong>Collation:</strong> N/A</p>
+                            <p><strong>Destekleyen Modüller:</strong></p>
+                            <ul class="db-modules-list">
+                                <li>Core</li>
+                                <li>Panel</li>
+                                <li>LiveChat</li>
+                                <li>Fusion</li>
+                                <li>AI Flow</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="db-card">
+                        <div class="db-header">
+                            <h3>PostgreSQL</h3>
+                            <button class="edit-btn"><i class="fas fa-edit"></i></button>
+                        </div>
+                        <div class="db-body">
+                            <p><strong>Port:</strong> 5432</p>
+                            <p><strong>Collation:</strong> N/A</p>
+                            <p><strong>Destekleyen Modüller:</strong></p>
+                            <ul class="db-modules-list">
+                                <li>Core</li>
+                                <li>Panel</li>
+                                <li>AI Flow</li>
+                                <li>Analytics</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="requirementsTab" class="tab-content">
+                <h2>Gereksinim Dokümanları</h2>
+                <p class="admin-description">Oluşturulan gereksinim dokümanlarını görüntüleyin ve yönetin.</p>
+                
+                <div class="requirements-filters">
+                    <div class="filter-group">
+                        <label for="dateFilter">Tarih Aralığı:</label>
+                        <select id="dateFilter">
+                            <option value="all">Tümü</option>
+                            <option value="today">Bugün</option>
+                            <option value="week">Bu Hafta</option>
+                            <option value="month">Bu Ay</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="moduleFilter">Modül:</label>
+                        <select id="moduleFilter">
+                            <option value="all">Tümü</option>
+                            <option value="core">Core</option>
+                            <option value="panel">Panel</option>
+                            <option value="classifier">Classifier</option>
+                            <option value="aiflow">AI Flow</option>
+                        </select>
+                    </div>
+                    <div class="search-group">
+                        <input type="text" id="searchRequirements" placeholder="Ara...">
+                        <button class="search-btn"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+                
+                <div class="requirements-table-container">
+                    <table class="requirements-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Oluşturulma Tarihi</th>
+                                <th>Ortam</th>
+                                <th>Modüller</th>
+                                <th>Veritabanı</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>REQ-001</td>
+                                <td>18.04.2025 14:30</td>
+                                <td>Test ve Canlı</td>
+                                <td>Core, Panel, Classifier</td>
+                                <td>MSSQL</td>
+                                <td class="actions">
+                                    <button class="view-btn"><i class="fas fa-eye"></i></button>
+                                    <button class="download-btn"><i class="fas fa-download"></i></button>
+                                    <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>REQ-002</td>
+                                <td>17.04.2025 10:15</td>
+                                <td>Canlı</td>
+                                <td>Core, Panel, AI Flow</td>
+                                <td>PostgreSQL</td>
+                                <td class="actions">
+                                    <button class="view-btn"><i class="fas fa-eye"></i></button>
+                                    <button class="download-btn"><i class="fas fa-download"></i></button>
+                                    <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>REQ-003</td>
+                                <td>16.04.2025 16:45</td>
+                                <td>Test</td>
+                                <td>Core, Panel, LiveChat</td>
+                                <td>MongoDB</td>
+                                <td class="actions">
+                                    <button class="view-btn"><i class="fas fa-eye"></i></button>
+                                    <button class="download-btn"><i class="fas fa-download"></i></button>
+                                    <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modül Düzenleme Modalı -->
+    <div id="editModuleModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Modül Düzenle</h2>
+            <form id="editModuleForm">
+                <input type="hidden" id="moduleId" name="moduleId">
+                
+                <div class="form-group">
+                    <label for="moduleDescription">Açıklama</label>
+                    <textarea id="moduleDescription" name="moduleDescription" rows="3" required></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group half">
+                        <h3>Test Ortamı</h3>
+                        <div class="form-group">
+                            <label for="cpuTest">CPU (Core)</label>
+                            <input type="number" id="cpuTest" name="cpuTest" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ramTest">RAM (GB)</label>
+                            <input type="number" id="ramTest" name="ramTest" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="diskTest">Disk (GB)</label>
+                            <input type="number" id="diskTest" name="diskTest" min="1" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group half">
+                        <h3>Canlı Ortam</h3>
+                        <div class="form-group">
+                            <label for="cpuLive">CPU (Core)</label>
+                            <input type="number" id="cpuLive" name="cpuLive" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ramLive">RAM (GB)</label>
+                            <input type="number" id="ramLive" name="ramLive" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="diskLive">Disk (GB)</label>
+                            <input type="number" id="diskLive" name="diskLive" min="1" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="save-btn">Kaydet</button>
+                    <button type="button" class="cancel-btn">İptal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 CBOT. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+
+    <script src="static/js/admin.js"></script>
+</body>
+</html>
