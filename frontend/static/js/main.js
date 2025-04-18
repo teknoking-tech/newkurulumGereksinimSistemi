@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
             addUserMessage(message);
             userMessageInput.value = '';
             
-            // Process user message and generate bot response
+            // Process user message and send to webhook
             processChatbotResponse(message);
         }
     }
@@ -141,62 +141,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function processChatbotResponse(userMessage) {
-        // Simulate chatbot processing with n8n webhook integration
-        // In a real implementation, this would call the backend API
-        
-        setTimeout(() => {
-            // Sample responses based on user message content
-            let botResponse;
-            
-            if (userMessage.toLowerCase().includes('merhaba') || 
-                userMessage.toLowerCase().includes('selam')) {
-                botResponse = "Merhaba! Size nasıl yardımcı olabilirim?";
-            }
-            else if (userMessage.toLowerCase().includes('modül') || 
-                    userMessage.toLowerCase().includes('core') ||
-                    userMessage.toLowerCase().includes('panel')) {
-                botResponse = "CBOT platformunda Core ve Panel temel modüllerdir. Diğer modüller ihtiyaçlarınıza göre eklenebilir. Hangi özelliğe ihtiyacınız olduğu konusunda bilgi verirseniz size en uygun modülleri önerebilirim.";
-            }
-            else if (userMessage.toLowerCase().includes('veritabanı') || 
-                    userMessage.toLowerCase().includes('database')) {
-                botResponse = "CBOT platformu MongoDB, MSSQL ve PostgreSQL veritabanlarını desteklemektedir. MSSQL için collation ayarı SQL_Latin1_General_CP1_CI_AS olmalıdır. Classifier modülü sadece MSSQL ile çalışmaktadır.";
-            }
-            else if (userMessage.toLowerCase().includes('donanım') || 
-                    userMessage.toLowerCase().includes('hardware')) {
-                botResponse = "Donanım gereksinimleri seçtiğiniz modüllere göre değişiklik gösterir. Temel kurulum için minimum 8 Core CPU, 16 GB RAM önerilir. AI Flow modülü için en az 10 Core CPU ve 8 GB RAM gereklidir. Detaylı gereksinimler için formu doldurarak dokümantasyon oluşturabilirsiniz.";
-            }
-            else if (userMessage.toLowerCase().includes('ağ') || 
-                    userMessage.toLowerCase().includes('network') ||
-                    userMessage.toLowerCase().includes('firewall')) {
-                botResponse = "Kurulum için sunucuların internet erişimli olması, veritabanı portlarının açık olması ve 5 adet DNS kaydı gerekmektedir. Load Balancer kullanılacaksa 5000 portunda WebSocket desteği bulunmalıdır.";
-            }
-            else if (userMessage.toLowerCase().includes('ldap')) {
-                botResponse = "LDAP entegrasyonu için LDAP_URL, BIND_DN, SEARCH_BASE ve SEARCH_FILTER bilgilerini sağlamanız gerekir. Ayrıca Email, Role ve Name alanlarının mapping işlemi yapılmalıdır.";
-            }
-            else if (userMessage.toLowerCase().includes('gpu')) {
-                botResponse = "GPU gereksinimi olan servisler için özel donanım konfigürasyonu gereklidir. HF Model Hosting servisi ve bazı AI Flow servisleri GPU gerektirir. Kurulum formunda bu servisleri seçtiğinizde gerekli GPU RAM ve VRAM miktarları belirtilecektir.";
-            }
-            else if (userMessage.toLowerCase().includes('test') || 
-                    userMessage.toLowerCase().includes('canlı') ||
-                    userMessage.toLowerCase().includes('ortam')) {
-                botResponse = "Test ve canlı ortamların kurulumu için ayrı donanım gereksinimleri bulunmaktadır. Test ortamları için daha düşük kapasiteli donanım yeterli olabilir. DNS kayıtlarında test ortamları için sonuna '-test' eklenir.";
-            }
-            else if (userMessage.toLowerCase().includes('docker') ||
-                    userMessage.toLowerCase().includes('image') ||
-                    userMessage.toLowerCase().includes('container')) {
-                botResponse = "Tüm CBOT servisleri container olarak çalışmaktadır. Servis image'ları registry.cbot.ai adresinden çekilir ve sunucuların 443 portundan bu adrese erişebilmesi gerekir.";
-            }
-            else if (userMessage.toLowerCase().includes('teşekkür')) {
-                botResponse = "Rica ederim! Başka bir sorunuz olursa yardımcı olmaktan memnuniyet duyarım.";
-            }
-            else {
-                botResponse = "Anladım. CBOT kurulumu hakkında başka bir sorunuz var mı? Modüller, donanım gereksinimleri, ağ yapılandırması veya diğer konularda size yardımcı olabilirim.";
-            }
-            
-            addBotMessage(botResponse);
-        }, 1000);
+        // Kullanıcının mesajını API'ye gönderiyoruz (webhook entegrasyonu)
+        fetch('/api/chatbot/message', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ message: userMessage })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // API'den gelen cevabı chatbot mesajı olarak gösteriyoruz
+            addBotMessage(data.response);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            addBotMessage("Bağlantı hatası oluştu. Lütfen daha sonra tekrar deneyin.");
+        });
     }
-
     function generateRequirements() {
         // Gather all form data
         const formData = {

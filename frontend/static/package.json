@@ -1,0 +1,23 @@
+{
+    "name": "cbot-kurulum-gereksinimi",
+    "version": "1.0.0",
+    "description": "CBOT Kurulum Gereksinimi Çıkartan Akıllı Asistan",
+    "main": "index.html",
+    "scripts": {
+      "start": "http-server -a localhost -p 8080 -c-1",
+      "build": "mkdir -p dist && cp -r index.html admin.html static dist/"
+    },
+    "keywords": [
+      "cbot",
+      "chatbot",
+      "kurulum",
+      "gereksinim"
+    ],
+    "author": "CBOT",
+    "license": "UNLICENSED",
+    "private": true,
+    "devDependencies": {
+      "http-server": "^14.1.1"
+    },
+    "dependencies": {}
+  }

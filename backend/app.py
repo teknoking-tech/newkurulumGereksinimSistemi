@@ -26,6 +26,9 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'cbot-secret-key-change-
 app.config['JWT_EXPIRATION'] = 3600  # Token süresi (saniye)
 
 # n8n webhook URL'i (gerçek uygulamada env dosyasından alınabilir)
+CBOT_WEBHOOK_URL = os.environ.get('CBOT_WEBHOOK_URL', 'https://aiflow.test.cbot.ai/webhook-test/cbot-setup-assistant/gereklilikler')
+
+# n8n webhook URL'i (alternatif olarak mevcut tutalım)
 N8N_WEBHOOK_URL = os.environ.get('N8N_WEBHOOK_URL', 'http://n8n:5678/webhook/cbot-chatbot')
 
 # Mock veritabanı (gerçek uygulamada gerçek bir veritabanı kullanılır)
@@ -279,6 +282,7 @@ def login():
     }), 200
 
 # Chatbot mesaj işleme
+# Chatbot mesaj işleme
 @app.route('/api/chatbot/message', methods=['POST'])
 def process_message():
     data = request.get_json()
@@ -288,27 +292,50 @@ def process_message():
         return jsonify({'message': 'Mesaj içeriği gereklidir!'}), 400
     
     try:
-        # n8n webhook'a mesajı ilet
+        # AIFlow webhook'a mesajı ilet
         webhook_response = requests.post(
-            N8N_WEBHOOK_URL,
+            CBOT_WEBHOOK_URL,
             json={'message': user_message},
-            timeout=5
+            timeout=10
         )
         
         if webhook_response.status_code == 200:
             response_data = webhook_response.json()
             bot_message = response_data.get('response', 'Mesajınız alındı, ancak bir cevap oluşturulamadı.')
+            
+            # Alternatif olarak eğer AIFlow "response" değil farklı bir alan dönüyorsa onu da kontrol edelim
+            if not bot_message and 'message' in response_data:
+                bot_message = response_data['message']
+            elif not bot_message and 'answer' in response_data:
+                bot_message = response_data['answer']
+            elif not bot_message and 'content' in response_data:
+                bot_message = response_data['content']
         else:
             # Webhook başarısız olursa basit bir cevap döndür
-            logger.warning(f"n8n webhook failed with status {webhook_response.status_code}")
+            logger.warning(f"AIFlow webhook failed with status {webhook_response.status_code}")
             bot_message = "Şu anda sisteme ulaşılamıyor. Lütfen daha sonra tekrar deneyin."
     
     except requests.RequestException as e:
-        logger.error(f"Error connecting to n8n webhook: {e}")
-        bot_message = "Chatbot servisine bağlanırken bir hata oluştu. Lütfen daha sonra tekrar deneyin."
+        logger.error(f"Error connecting to AIFlow webhook: {e}")
+        
+        # Alternatif olarak n8n webhook'u deneyelim
+        try:
+            webhook_response = requests.post(
+                N8N_WEBHOOK_URL,
+                json={'message': user_message},
+                timeout=5
+            )
+            
+            if webhook_response.status_code == 200:
+                response_data = webhook_response.json()
+                bot_message = response_data.get('response', 'n8n üzerinden cevap alındı.')
+            else:
+                bot_message = "Chatbot servisine bağlanırken bir hata oluştu. Lütfen daha sonra tekrar deneyin."
+        except:
+            bot_message = "Tüm chatbot servisleri şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin."
     
     return jsonify({
-        'message': bot_message
+        'response': bot_message
     }), 200
 
 # Gereksinim dokümanı oluşturma

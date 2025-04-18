@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # Flask backend servisi
   backend:
@@ -13,6 +11,7 @@ services:
     environment:
       - DEBUG=false
       - SECRET_KEY=change-this-in-production
+      - CBOT_WEBHOOK_URL=https://aiflow.test.cbot.ai/webhook-test/cbot-setup-assistant/gereklilikler
       - N8N_WEBHOOK_URL=http://n8n:5678/webhook/cbot-chatbot
     volumes:
       - ./backend:/app
@@ -33,7 +32,7 @@ services:
     networks:
       - cbot-network
 
-  # n8n chatbot entegrasyonu
+  # n8n chatbot entegrasyonu (alternatif için hazır tutalım)
   n8n:
     image: n8nio/n8n:latest
     container_name: cbot-n8n
